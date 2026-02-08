@@ -1,6 +1,9 @@
-from playwright.sync_api import sync_playwright, expect
+import pytest
+from playwright.sync_api import sync_playwright
 
 
+@pytest.mark.regression  # Добавили маркировку regression
+@pytest.mark.registration  # Добавили маркировку registration
 def test_successful_registration():  # Создаем тестовую функцию
     # Все остальные действия остаются без изменений
     with sync_playwright() as playwright:
@@ -30,5 +33,3 @@ def test_successful_registration():  # Создаем тестовую функ�
         page = context.new_page()
 
         page.goto('https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/dashboard')
-
-        page.wait_for_timeout(5000)
