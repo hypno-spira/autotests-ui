@@ -2,10 +2,17 @@ import pytest
 from playwright.sync_api import expect, Page
 
 
-@pytest.mark.regression  # Добавили маркировку regression
-@pytest.mark.authorization  # Добавили маркировку authorization
-# Использование фикстуры 'chromium_page', которая автоматически предоставляет готовую страницу
-def test_wrong_email_or_password_authorization(chromium_page: Page):
+@pytest.mark.regression
+@pytest.mark.authorization
+@pytest.mark.parametrize(
+    "email, password",
+    [
+        ("user.name@gmail.com", "password"),
+        ("user.name@gmail.com", "  "),
+        ("  ", "password")
+    ]
+)
+def test_wrong_email_or_password_authorization(chromium_page: Page, email: str, password: str):
     # Теперь страница передаётся в тест через фикстуру 'chromium_page', браузер не нужно инициализировать вручную
     chromium_page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/login")
 
