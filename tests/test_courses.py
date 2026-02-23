@@ -1,5 +1,4 @@
 import pytest
-from playwright.sync_api import Page, expect
 
 from pages.courses_list_page import CoursesListPage
 from pages.create_course_page import CreateCoursePage
@@ -7,27 +6,15 @@ from pages.create_course_page import CreateCoursePage
 
 @pytest.mark.regression
 @pytest.mark.courses
-def test_empty_courses_list(chromium_page_with_state: Page):
-    chromium_page_with_state.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses")
+def test_empty_courses_list(courses_list_page: CoursesListPage):
+    courses_list_page.visit("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses")
 
-    # Проверить наличие и текст заголовка "Courses"
-    courses = chromium_page_with_state.get_by_test_id('courses-list-toolbar-title-text')
-    expect(courses).to_be_visible()
-    expect(courses).to_have_text('Courses')
+    courses_list_page.navbar.check_visible("username")
+    courses_list_page.sidebar.check_visible()
 
-    # Проверить наличие и текст блока "There is no results"
-    no_results = chromium_page_with_state.get_by_test_id('courses-list-empty-view-title-text')
-    expect(no_results).to_be_visible()
-    expect(no_results).to_have_text('There is no results')
-
-    # Проверить наличие и видимость иконки пустого блока
-    icon = chromium_page_with_state.get_by_test_id('courses-list-empty-view-icon')
-    expect(icon).to_be_visible()
-
-    # Проверить наличие и текст описания блока: "Results from the load test pipeline will be displayed here"
-    text = chromium_page_with_state.get_by_test_id('courses-list-empty-view-description-text')
-    expect(text).to_be_visible()
-    expect(text).to_have_text('Results from the load test pipeline will be displayed here')
+    courses_list_page.check_visible_courses_title()
+    courses_list_page.check_visible_create_course_button()
+    courses_list_page.check_visible_empty_view()
 
 
 @pytest.mark.regression
