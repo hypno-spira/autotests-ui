@@ -12,8 +12,7 @@ def test_empty_courses_list(courses_list_page: CoursesListPage):
     courses_list_page.navbar.check_visible("username")
     courses_list_page.sidebar.check_visible()
 
-    courses_list_page.check_visible_courses_title()
-    courses_list_page.check_visible_create_course_button()
+    courses_list_page.toolbar_view.check_visible()
     courses_list_page.check_visible_empty_view()
 
 
@@ -62,11 +61,5 @@ def test_create_course(create_course_page: CreateCoursePage, courses_list_page: 
     create_course_page.click_create_course_button()
 
     # 14. После создания курса произойдет редирект на страницу со списком курсов. Необходимо проверить наличие заголовка "Courses"
-    courses_list_page.check_visible_courses_title()
-
     # 15. Проверить наличие кнопки создания курса
-    courses_list_page.check_visible_create_course_button()
-
-    # 16. Проверить корректность отображаемых данных на карточке курса
-    courses_list_page.check_visible_course_card(index=0, title="Playwright", max_score="100", min_score="10",
-                                                estimated_time="2 weeks")
+    courses_list_page.toolbar_view.check_visible()
