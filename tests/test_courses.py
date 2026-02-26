@@ -29,10 +29,9 @@ def test_create_course(create_course_page: CreateCoursePage, courses_list_page: 
     create_course_page.check_disabled_create_course_button()
 
     # 4. Убедиться, что отображается пустой блок для предпросмотра изображения
-    create_course_page.check_visible_image_preview_empty_view()
-
     # 5. Проверить, что блок загрузки изображения отображается в состоянии, когда картинка не выбрана
-    create_course_page.check_visible_image_upload_view(is_image_uploaded=False)
+    create_course_page.image_upload_widget.check_visible(is_image_uploaded=False)
+
 
     # 6. Проверить, что форма создания курса отображается и содержит значения по умолчанию.
     create_course_page.check_visible_create_course_form(title="", estimated_time="", description="", max_score="0",
@@ -48,10 +47,10 @@ def test_create_course(create_course_page: CreateCoursePage, courses_list_page: 
     create_course_page.check_visible_exercises_empty_view()
 
     # 10. Загрузить изображение для превью курса
-    create_course_page.upload_preview_image(file="./testdata/files/image.png")
+    create_course_page.image_upload_widget.upload_preview_image(file="./testdata/files/image.png")
 
     # 11. Убедиться, что блок загрузки изображения отображает состояние, когда картинка успешно загружена
-    create_course_page.check_visible_image_upload_view()
+    create_course_page.image_upload_widget.check_visible(is_image_uploaded=True)
 
     # 12. Заполнить форму создания курса значениями
     create_course_page.fill_create_course_form(title="Playwright", estimated_time="2 weeks", description="Playwright",
